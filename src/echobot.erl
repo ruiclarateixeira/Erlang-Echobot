@@ -24,7 +24,8 @@ listen(ListenSocket) ->
 receive_data(Socket) ->
   case gen_tcp:recv(Socket, 0) of
     {ok, Binary} ->
-      gen_tcp:send(Socket, jiffy:decode(Binary)),
+      #{<<"message">> := M} = jsx:decode(Binary, [return_maps]),
+      gen_tcp:send(Socket, M),
       receive_data(Socket);
     {error, closed} ->
       io:format("Socket closed.")
