@@ -1,1 +1,6 @@
+# Erlang
 *.beam
+
+# rebar
+rebar.lock
+_build
