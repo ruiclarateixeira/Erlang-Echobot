@@ -9,7 +9,7 @@
     jsx
    ]},
   {env,[]},
-  {modules, []},
+  {modules, [encoded]},
 
   {maintainers, []},
   {licenses, []},

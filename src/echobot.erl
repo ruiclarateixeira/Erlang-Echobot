@@ -24,9 +24,18 @@ listen(ListenSocket) ->
 receive_data(Socket) ->
   case gen_tcp:recv(Socket, 0) of
     {ok, Binary} ->
-      #{<<"message">> := M} = jsx:decode(Binary, [return_maps]),
-      gen_tcp:send(Socket, M),
+      Message = jsx:decode(Binary, [return_maps]),
+      gen_tcp:send(Socket, create_response(Message)),
       receive_data(Socket);
     {error, closed} ->
       io:format("Socket closed.")
   end.
+
+create_response(#{<<"repeat">> := Content}) ->
+  Content;
+create_response(#{<<"encode">> := Content}) ->
+  encode:encode(binary_to_list(Content));
+create_response(#{<<"decode">> := Content}) ->
+  encode:decode(binary_to_list(Content));
+create_response(_) ->
+  io:format("Action not reconized~n").
