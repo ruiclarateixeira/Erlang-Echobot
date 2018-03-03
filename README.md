@@ -1,12 +1,22 @@
 # Echobot
 
+## Build
+
+```
+rebar compile
+```
+
 ## Starting Server
-```erlang
+
+```
+$ rebar shell
+(...)
 1> echobot:server(2000).
 Listening on port 2000
 ```
 
 ## Interacting with Server
+
 ```shell
 > {"repeat":"I'm a public message"}
 I'm a public message
